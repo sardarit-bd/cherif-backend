@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
@@ -59,11 +60,16 @@ class AuthController extends Controller
         return response()->json(auth('api')->user());
     }
 
-    public function logout()
-    {
+public function logout()
+{
+    try {
         auth('api')->logout();
         return response()->json(['message' => 'Logged out successfully']);
+    } catch (JWTException $e) {
+        return response()->json(['error' => 'Token missing or invalid'], 400);
     }
+}
+
 
     public function refresh()
     {
