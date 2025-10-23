@@ -60,15 +60,15 @@ class AuthController extends Controller
         return response()->json(auth('api')->user());
     }
 
-public function logout()
-{
-    try {
-        auth('api')->logout();
-        return response()->json(['message' => 'Logged out successfully']);
-    } catch (JWTException $e) {
-        return response()->json(['error' => 'Token missing or invalid'], 400);
+    public function logout()
+    {
+        try {
+            auth('api')->logout();
+            return response()->json(['message' => 'Logged out successfully']);
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Token missing or invalid'], 400);
+        }
     }
-}
 
 
     public function refresh()
